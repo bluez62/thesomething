@@ -1,24 +1,18 @@
-// 1. Dark / Light Mode Toggle
+// Replace section 1 with this revised toggle logic:
 const themeToggleBtn = document.getElementById('themeToggle');
 
-// 1. Check saved preference on page load (default to dark if none saved)
+// 1. Load saved theme or default to dark
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.body.setAttribute('data-theme', savedTheme);
 themeToggleBtn.textContent = savedTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
 
-// 2. Toggle and save preference on click
+// 2. Toggle state & save to localStorage
 themeToggleBtn.addEventListener('click', () => {
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    if (newTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'dark');
-        themeToggleBtn.textContent = 'Toggle Light Mode';
-    } else {
-        document.body.removeAttribute('data-theme'); // 'light' is the default CSS state without the attribute
-        themeToggleBtn.textContent = 'Toggle Dark Mode';
-    }
-    
+    document.body.setAttribute('data-theme', newTheme);
+    themeToggleBtn.textContent = newTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
     localStorage.setItem('theme', newTheme);
 });
 
