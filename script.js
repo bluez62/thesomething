@@ -1,53 +1,64 @@
-        // 1. Dark / Light Mode Toggle
-        const themeToggleBtn = document.getElementById('themeToggle');
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.body.removeAttribute('data-theme');
-                themeToggleBtn.textContent = 'Toggle Dark Mode';
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-                themeToggleBtn.textContent = 'Toggle Light Mode';
-            }
-        });
+// 1. Dark / Light Mode Toggle
+const themeToggleBtn = document.getElementById('themeToggle');
 
-        // 2. Search Functionality
-        const searchInput = document.getElementById('searchInput');
-        const searchableCards = document.querySelectorAll('.searchable');
+// 1. Check saved preference on page load (default to dark if none saved)
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.body.setAttribute('data-theme', savedTheme);
+themeToggleBtn.textContent = savedTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
+// 2. Toggle and save preference on click
+themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    if (newTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Toggle Light Mode';
+    } else {
+        document.body.removeAttribute('data-theme'); // 'light' is the default CSS state without the attribute
+        themeToggleBtn.textContent = 'Toggle Dark Mode';
+    }
+    
+    localStorage.setItem('theme', newTheme);
+});
 
-            searchableCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(query)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+// 2. Search Functionality
+const searchInput = document.getElementById('searchInput');
+const searchableCards = document.querySelectorAll('.searchable');
 
-        // 3. Modal Popup Logic
-        const modal = document.getElementById('profileModal');
-        const modalName = document.getElementById('modalName');
-        const modalRole = document.getElementById('modalRole');
-        const modalBio = document.getElementById('modalBio');
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
 
-        function openModal(name, bio, role) {
-            modalName.textContent = name;
-            modalRole.textContent = role;
-            modalBio.textContent = bio;
-            modal.style.display = 'flex';
+    searchableCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(query)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
         }
+    });
+});
 
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        
-        // Close modal when clicking outside the content box
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
+// 3. Modal Popup Logic
+const modal = document.getElementById('profileModal');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalBio = document.getElementById('modalBio');
+
+function openModal(name, bio, role) {
+    modalName.textContent = name;
+    modalRole.textContent = role;
+    modalBio.textContent = bio;
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking outside the content box
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
