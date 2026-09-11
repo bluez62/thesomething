@@ -12,15 +12,24 @@
     --badge-text: #4a5568;
 }
 
-[data-theme="dark"] {
+/* Base default styles for Light Mode */
+body[data-theme="light"] {
+    --bg-color: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-color: #2c3e50;
+    --text-muted: #6c757d;
+    --sidebar-bg: #1e1e2d;
+    --border-color: #e2e8f0;
+}
+
+/* Dark Mode styles */
+body[data-theme="dark"] {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
     --text-color: #e0e0e0;
     --text-muted: #a0a0a0;
     --sidebar-bg: #0a0a0c;
     --border-color: #2d3748;
-    --badge-bg: #2d3748;
-    --badge-text: #cbd5e0;
 }
 
 * {
