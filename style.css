@@ -225,3 +225,10 @@ del {
     margin: 0 auto 15px;
     display: block;
 }
+
+.version-badge {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 5px;
+}

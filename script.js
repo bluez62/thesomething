@@ -1,3 +1,8 @@
+const VERSION = "0.0.1"
+
+let versioncounter = document.getElementById("wikiVersion");
+versioncounter.textContent = VERSION;
+
 // Replace section 1 with this revised toggle logic:
 const themeToggleBtn = document.getElementById('themeToggle');
 
