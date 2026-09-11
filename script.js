@@ -25,6 +25,32 @@ themeToggleBtn.addEventListener('click', () => {
 const searchInput = document.getElementById('searchInput');
 const searchableCards = document.querySelectorAll('.searchable');
 
+// Submit Changes Modal Handler
+const submitModal = document.getElementById('submitModal');
+const openSubmitModalBtn = document.getElementById('openSubmitModalBtn');
+const closeSubmitModalBtn = document.getElementById('closeSubmitModalBtn');
+
+// Open menu
+if (openSubmitModalBtn && submitModal) {
+    openSubmitModalBtn.addEventListener('click', () => {
+        submitModal.style.display = 'flex';
+    });
+}
+
+// Close menu on button click
+if (closeSubmitModalBtn && submitModal) {
+    closeSubmitModalBtn.addEventListener('click', () => {
+        submitModal.style.display = 'none';
+    });
+}
+
+// Close menu if clicking outside the content box
+window.addEventListener('click', (e) => {
+    if (e.target === submitModal) {
+        submitModal.style.display = 'none';
+    }
+});
+
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
 
