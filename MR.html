@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnypants123 | The Something Wiki</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --text-muted: #6c757d;
+            --sidebar-bg: #1e1e2d;
+            --accent-color: #6c5ce7;
+            --accent-light: rgba(108, 92, 231, 0.1);
+            --border-color: #e2e8f0;
+            --quote-border: #6c5ce7;
+            --badge-bg: #e2e8f0;
+            --badge-text: #4a5568;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --sidebar-bg: #0a0a0c;
+            --border-color: #2d3748;
+            --badge-bg: #2d3748;
+            --badge-text: #cbd5e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--sidebar-bg);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .site-title del {
+            color: #a0a0a0;
+            text-decoration-color: #ff4d4d;
+        }
+
+        .theme-toggle-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Main Container Layout */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Main content left, Infobox right */
+            gap: 30px;
+        }
+
+        /* Back Button */
+        .back-nav {
+            grid-column: 1 / -1;
+            margin-bottom: -10px;
+        }
+
+        .back-nav a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Article Main Column */
+        .article-content {
+            background-color: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .article-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .article-title {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Category Badges */
+        .tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tag.lore { background: rgba(235, 77, 75, 0.2); color: #eb4d4b; }
+        .tag.person { background: rgba(72, 219, 251, 0.2); color: #0abde3; }
+        .tag.joke { background: rgba(254, 202, 87, 0.2); color: #f39c12; }
+
+        /* Content Sections */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        /* Quotes Block */
+        .quote-box {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--quote-border);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 8px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+        }
+
+        /* Timeline List */
+        .timeline {
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-color);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        /* Wikipedia Style Sidebar (Infobox) */
+        .infobox {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .infobox-image {
+            width: 100%;
+            height: 180px;
+            background-color: var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .infobox-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .infobox-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .infobox-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .infobox-label {
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .infobox-value {
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .infobox {
+                order: -1; /* Puts infobox on top for mobile screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER BAR -->
+    <header class="top-bar">
+        <a href="index.html" class="site-title"><del>Everything</del> Something Wiki</a>
+        <button class="theme-toggle-btn" id="themeToggle">Toggle Dark Mode</button>
+    </header>
+
+    <div class="container">
+        <!-- BACK NAVIGATION -->
+        <div class="back-nav">
+            <a href="index.html">&larr; Back to Main Wiki</a>
+        </div>
+
+        <!-- MAIN ARTICLE -->
+        <main class="article-content">
+            <header class="article-header">
+                <div class="tags">
+                    <span class="tag lore">Lore</span>
+                    <span class="tag joke">Inside Joke</span>
+                </div>
+                <h1 class="article-title">Funnypants123</h1>
+            </header>
+
+            <!-- SECTION 1: OVERVIEW -->
+            <section class="section">
+                <h2 class="section-title">📌 Overview</h2>
+                <p>
+                    <strong>The Great Microwave Debacle</strong> refers to the chaotic events of October 14, when 
+                    Alex attempted to heat up a single slice of foil-wrapped leftover pizza in the group chat's shared apartment space.
+                </p>
+                <p>
+                    The resulting sparks created a minor power outage in the kitchen, leading to 3 weeks of continuous chat teasing and the creation of the <code>:fire_microwave:</code> custom emote.
+                </p>
+            </section>
+
+            <!-- SECTION 2: FAMOUS QUOTES LOG -->
+            <section class="section">
+                <h2 class="section-title">💬 Chat Log & Quotes</h2>
+                <div class="quote-box">
+                    "Wait, guys, are metal forks allowed in the microwave if they're touching the food?"
+                    <span class="quote-author">— Alex (3 seconds before disaster)</span>
+                </div>
+                <div class="quote-box">
+                    "I didn't burn the house down, I just gave the pizza dynamic lightning effects."
+                    <span class="quote-author">— Alex (defending themselves in voice chat)</span>
+                </div>
+            </section>
+
+            <!-- SECTION 3: TIMELINE OF EVENTS -->
+            <section class="section">
+                <h2 class="section-title">⏳ Event Timeline</h2>
+                <ul class="timeline">
+                    <li class="timeline-item">
+                        <div class="timeline-date">8:14 PM</div>
+                        <div>Alex asks if anyone wants hot pizza.</div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-date">8:15 PM</div>
+                        <div>A bright flash is seen from the kitchen.</div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-date">8:16 PM</div>
+                        <div>Sam posts a photo of the smoking appliance in the chat.</div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-date">8:20 PM</div>
+                        <div>The first meme is made and uploaded to the group chat media library.</div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SECTION 4: CONSEQUENCES / IMPACT -->
+            <section class="section">
+                <h2 class="section-title">⚡ Aftermath & Legacy</h2>
+                <p>
+                    Following the incident, the group chat introduced "Rule #8: Alex is barred from operating kitchen appliances after 8 PM."
+                </p>
+            </section>
+        </main>
+
+        <!-- SIDEBAR INFOBOX -->
+        <aside class="infobox">
+            <!-- Icon/Emoji Placeholder or Image -->
+            <div class="infobox-image">
+                🔥🍕
+                <!-- To use a real image instead: <img src="image.jpg" alt="Microwave"> -->
+            </div>
+            <div class="infobox-title">The Microwave Incident</div>
+
+            <div class="infobox-row">
+                <span class="infobox-label">Type</span>
+                <span class="infobox-value">Catastrophe / Joke</span>
+            </div>
+
+            <div class="infobox-row">
+                <span class="infobox-label">Date Occurred</span>
+                <span class="infobox-value">Oct 14</span>
+            </div>
+
+            <div class="infobox-row">
+                <span class="infobox-label">Main Subject</span>
+                <span class="infobox-value">Alex</span>
+            </div>
+
+            <div class="infobox-row">
+                <span class="infobox-label">Status</span>
+                <span class="infobox-value">Active Joke</span>
+            </div>
+
+            <div class="infobox-row">
+                <span class="infobox-label">Damage Level</span>
+                <span class="infobox-value">1 Microwave</span>
+            </div>
+        </aside>
+    </div>
+
+    <!-- JAVASCRIPT FOR DARK MODE TOGGLE -->
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.textContent = 'Toggle Dark Mode';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.textContent = 'Toggle Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>
