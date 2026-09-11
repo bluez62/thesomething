@@ -302,3 +302,14 @@ p {
     width: 90%;
     border: 1px solid var(--border-color);
 }
+
+.fake-link {
+  color: #0066cc;             /* Classic link blue */
+  text-decoration: underline; /* The underline */
+  cursor: pointer;            /* Changes mouse to a hand icon */
+}
+
+/* Optional: Slight fade effect when hovered */
+.fake-link:hover {
+  color: #004499;
+}

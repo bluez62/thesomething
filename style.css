@@ -232,3 +232,14 @@ del {
     font-weight: 600;
     margin-top: 5px;
 }
+
+.fake-link {
+  color: #0066cc;             /* Classic link blue */
+  text-decoration: underline; /* The underline */
+  cursor: pointer;            /* Changes mouse to a hand icon */
+}
+
+/* Optional: Slight fade effect when hovered */
+.fake-link:hover {
+  color: #004499;
+}
