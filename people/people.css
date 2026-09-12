@@ -313,3 +313,39 @@ p {
 .fake-link:hover {
   color: #004499;
 }
+
+/* Unfinished Page Notice Styles */
+.wip-banner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgba(254, 202, 87, 0.15); /* Soft yellow/amber background */
+    border: 1px solid #f39c12; /* Golden border */
+    border-left: 5px solid #f39c12; /* Thick accent bar on the left */
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    color: var(--text-color);
+}
+
+.wip-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.wip-text strong {
+    display: block;
+    font-size: 1rem;
+    color: #d35400; /* Darker orange text for dark/light mode compatibility */
+    margin-bottom: 2px;
+}
+
+[data-theme="dark"] .wip-text strong {
+    color: #f39c12; /* Lighter golden amber for dark mode readability */
+}
+
+.wip-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

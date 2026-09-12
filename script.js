@@ -30,6 +30,24 @@ const submitModal = document.getElementById('submitModal');
 const openSubmitModalBtn = document.getElementById('openSubmitModalBtn');
 const closeSubmitModalBtn = document.getElementById('closeSubmitModalBtn');
 
+const randomPageBtn = document.getElementById('randomPageBtn');
+
+const wikiPages = [
+    'people/funnypants123'
+    // Add future pages here (e.g., 'lore.html', 'rules.html')
+];
+
+if (randomPageBtn) {
+    randomPageBtn.addEventListener('click', () => {
+        // Pick a random page from the array
+        const randomIndex = Math.floor(Math.random() * wikiPages.length);
+        const selectedPage = wikiPages[randomIndex];
+        
+        // Navigate to the chosen page
+        window.location.href = selectedPage;
+    });
+}
+
 // Open menu
 if (openSubmitModalBtn && submitModal) {
     openSubmitModalBtn.addEventListener('click', () => {
